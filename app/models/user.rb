@@ -10,4 +10,7 @@ class User < ApplicationRecord
 
     # Returns an array of other users who the user has followed
     has_many :followings, through: :given_follows, source: :followed_user
+
+    # Returns the profile owned by the user
+    has_one :profile, dependent: :destroy
 end
