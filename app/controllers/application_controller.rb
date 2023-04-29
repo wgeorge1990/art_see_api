@@ -1,3 +1,4 @@
 class ApplicationController < ActionController::API
-    protect_from_fogery with: :null_session
+    include ActionController::RequestForgeryProtection
+    protect_from_forgery with: :null_session
 end
