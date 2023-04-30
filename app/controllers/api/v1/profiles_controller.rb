@@ -1,5 +1,10 @@
 class Api::V1::ProfilesController < ApplicationController
-  before_action :set_profile, only: %i[ show update destroy ]
+  before_action :set_profile, only: %i[ show update destroy latest]
+
+  def latest
+    render json: @profile
+  end
+
 
   # GET /api/v1/profiles
   def index
