@@ -1,25 +1,21 @@
-import logo from './logo.svg';
+import React, { createContext, useState } from 'react';
 import './App.css';
+import FileForm from './components/FileForm';
+import ProfileImage from './components/ProfileImage';
+
+export const AppContext = createContext(null);
 
 function App() {
+  const [ profileAvatar, setProfileAvatar ] = useState(AppContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <AppContext.Provider value={{profileAvatar, setProfileAvatar}} >
+        <div className="App" >
+          <FileForm />
+          <ProfileImage />
+        </div>
+      </ AppContext.Provider>
+  )
 }
 
 export default App;
