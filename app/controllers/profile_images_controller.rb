@@ -1,2 +1,0 @@
-class ProfileImagesController < ApplicationController
-end
