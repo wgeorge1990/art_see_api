@@ -1,4 +1,4 @@
-class API::V1::ProfileImagesController < ApplicationController
+class Api::V1::ProfileImagesController < Api::V1::BaseController
     # before_action :set_profile_image, only: %i[ show update destroy]
 
 #   def index
@@ -10,14 +10,17 @@ class API::V1::ProfileImagesController < ApplicationController
 #     render json: @profile_image
 #   end
 
-    # POST /events
+    # POST /api/v1/profile_images(.:format)
     def create
         @profile_image = ProfileImage.new(profile_image_params)
 
-        byebug
+        # byebug
+        # @profile_image.to_json(include: [:image])
+        # try this now with the serializer: EventSerializer.new(@event).serializable_hash
 
         if @profile_image.save
-            render json: @profile_image, status: :created, location: @profile_image
+            # render json: @profile_image, status: :created, location: @profile_image.image_url
+            render json: ProfileImageSerializer.new(@profile_image).serializable_hash[:data][:attributes], status: :created
         else
             render json: @profile_image.errors, status: :unprocessable_entity
         end

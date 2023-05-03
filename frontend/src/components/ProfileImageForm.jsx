@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function FileForm() {
+    const [json, setjson] = useState(null)
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -22,12 +23,12 @@ export default function FileForm() {
 
     function submitToApi(formData) {
         console.log(formData)
-        // fetch('http://localhost:3000/profile_images', {
-        //     method: 'post',
-        //     body: formData,
-        // }).then(response => response)
-        //     .then(data => console.log(data))
-        //     .catch(error => console.error(error));
+        fetch('http://localhost:3000/api/v1/profile_images', {
+            method: "POST",
+            body: formData,
+        }).then(response => response.json())
+            .then(data => setjson(data))
+            .catch(error => console.error(error));
     }
 
     return (
@@ -67,6 +68,9 @@ export default function FileForm() {
                         Update Profile
                     </button>
                 </form>
+            </section>
+            <section className="w-full block text-center">
+                { json && <img src={json.image_url} alt='profile pic'/>}
             </section>
         </>
     )
