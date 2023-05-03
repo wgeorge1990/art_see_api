@@ -2,20 +2,19 @@ class Api::V1::ProfilesController < ApplicationController
   before_action :set_profile, only: %i[ show update destroy latest]
 
   def latest
-    render json: @profile
+    render json: ProfileSerializer.new(@profile).serializable_hash[data][attributes]
   end
 
 
   # GET /api/v1/profiles
   def index
     @profiles = Profile.all
-
-    render json: @profiles
+    render json: @profiles.to_json(include: [:image])
   end
 
   # GET /api/v1/profiles/1
   def show
-    render json: @profile
+    render json: @profile.to_json(include: [:image])
   end
 
   # POST /api/v1/profiles
@@ -23,7 +22,7 @@ class Api::V1::ProfilesController < ApplicationController
     @profile = Profile.new(profile_params)
 
     if @profile.save
-      render json: @profile, status: :created, location: @profile
+      render json: @profile.to_json(include: [:image]), status: :created
     else
       render json: @profile.errors, status: :unprocessable_entity
     end
@@ -66,7 +65,8 @@ class Api::V1::ProfilesController < ApplicationController
         :headline, 
         :followers, 
         :following,
-        :image
+        :image,
+        :image_url
       )
     end
 end
