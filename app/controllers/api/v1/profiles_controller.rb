@@ -5,7 +5,6 @@ class Api::V1::ProfilesController < ApplicationController
     render json: ProfileSerializer.new(@profile).serializable_hash[data][attributes]
   end
 
-
   # GET /api/v1/profiles
   def index
     @profiles = Profile.all

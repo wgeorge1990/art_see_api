@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import './App.css';
-import ProfileForm from './components/FileForm';
+import ProfileForm from './components/ProfileForm';
 
 export const AppContext = createContext(null);
 
@@ -10,7 +10,7 @@ function App() {
   return (
       <AppContext.Provider value={{profile, setProfile}} >
         <div className="App" >
-          <ProfileForm profile={profile} setProfiles={setProfile} />
+          <ProfileForm profile={profile} setProfile={setProfile} />
         </div>
      </ AppContext.Provider>
   )
