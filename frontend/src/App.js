@@ -1,20 +1,18 @@
 import React, { createContext, useState } from 'react';
 import './App.css';
-import FileForm from './components/FileForm';
-import ProfileImage from './components/ProfileImage';
+import ProfileForm from './components/FileForm';
 
 export const AppContext = createContext(null);
 
 function App() {
-  const [ profileAvatar, setProfileAvatar ] = useState(AppContext);
+  const [ profile, setProfile ] = useState(null);
 
   return (
-      <AppContext.Provider value={{profileAvatar, setProfileAvatar}} >
+      <AppContext.Provider value={{profile, setProfile}} >
         <div className="App" >
-          <FileForm />
-          <ProfileImage />
+          <ProfileForm profile={profile} setProfiles={setProfile} />
         </div>
-      </ AppContext.Provider>
+     </ AppContext.Provider>
   )
 }
 

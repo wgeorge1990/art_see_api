@@ -1,35 +1,44 @@
 import React, { useState } from 'react'
-import { AppContext } from "../App"
 
-function FileForm() {
-    const [ profileAvatar, setProfileAvatar ] = useState(AppContext);
+function FileForm({ profile, setProfile }) {
     const [ age, setAge ] = useState(0)
     
     function handleSubmit(event){
         event.preventDefault();
         const data = new FormData();
+        //Hard code user_id input in until user auth and sessions are configured
+        data.append("profile[user_id]", event.target.user_id.value);
         data.append("profile[first_name]", event.target.first_name.value);
         data.append("profile[last_name]", event.target.last_name.value);
         data.append("profile[headline]", event.target.headline.value);
         data.append("profile[age]", event.target.age.value);
-        data.append("profile[image]", event.target.image.files[0]);
-        
-        console.log(data.get("profile[first_name]"))
-        console.log(data.get("profile[last_name]"))
-        console.log(data.get("profile[headline]"))
-        console.log(data.get("profile[age]"))
-        console.log(data.get("profile[image]"))
+        data.append("profile[image_url]", event.target.image_url.files[0]);
+        submitToApi(data);
     }
 
-    function updateAge(event) { setAge(event.target.value) }
+    function updateAge(event) { 
+        setAge(event.target.value) 
+    }
 
-    function submitToApi() {
-
+    function submitToApi( data ) {
+        fetch(`http://localhost:3000/api/v1/profiles`, {
+            method: "POST",
+            body: data,})
+            .then(response => response.json())
+            .then(data =>  setProfile(data))
+            .catch(error => console.error(error));
     }
     
     return <React.Fragment>
             <h1>ProfileImageForm</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
+                <label htmlFor='user_id'>
+                    user_id
+                </label>
+                <br />
+                <input type='number' name='user_id' id='user_id' />
+                <br />
+
                 <label htmlFor='headline'>
                     Headline
                 </label>
@@ -66,10 +75,10 @@ function FileForm() {
                 <label htmlFor='image'>Image</label>
                 <br/>
                 <br />
-                <input type='file' name='image' id='image'/>
+                <input type='file' name='image_url' id='image_url'/>
                 <br />
                 
-                <button type='submit'>Update Profile Image</button>
+                <button type='submit'>Update Profile</button>
             </form>
            </React.Fragment>
 }
