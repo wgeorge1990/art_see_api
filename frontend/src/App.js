@@ -1,18 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import './App.css';
-import ProfileForm from './components/FileForm';
-
-export const AppContext = createContext(null);
+import ProfileImageForm from './components/ProfileImageForm';
 
 function App() {
-  const [ profile, setProfile ] = useState(null);
-
   return (
-      <AppContext.Provider value={{profile, setProfile}} >
         <div className="App" >
-          <ProfileForm profile={profile} setProfiles={setProfile} />
+          <ProfileImageForm />
         </div>
-     </ AppContext.Provider>
   )
 }
 
