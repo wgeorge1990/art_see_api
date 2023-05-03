@@ -9,15 +9,6 @@ export default function FileForm() {
         const formData = new FormData()
         formData.append('profile_image[title]', form.title.value)
         formData.append('profile_image[image]', form.image.files[0], form.image.value)
-        // debugger
-        
-        const logFormData = (formData) => {
-            for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1])
-          }
-        }
-        logFormData(formData)
-    
         submitToApi(formData)
     }
 
@@ -34,7 +25,7 @@ export default function FileForm() {
     return (
         <>
             <section className="max-w-4xl mt-4 w-11/12 mx-auto bg-blue-50 p-8 shadow-lg rounded-lg">
-                <h1 className="text-3xl font-semibold text-center">Add/Update Profile Photo</h1>
+                <h1 className="text-3xl font-semibold text-center">Update Profile Photo</h1>
                 <form onSubmit={e => handleSubmit(e)}>
                     <fieldset className="my-2">
                         <label className="w-full block uppercase ml-3 mb-3" htmlFor="title">
@@ -63,15 +54,20 @@ export default function FileForm() {
                     </fieldset>
                     <button
                         className="w-full block p-3 bg-green-400 hover:bg-green-500 text-center transition duration-200"
-                        type="submit"
-                    >
+                        type="submit">
                         Update Profile
                     </button>
                 </form>
             </section>
-            <section className="w-full block text-center">
-                { json && <img src={json.image_url} alt='profile pic'/>}
+            <section className="profile-image-preview">
+                { json?.image_url && <img src={json.image_url} alt='profile pic'/>}
             </section>
         </>
     )
+}
+
+function logFormData(formData) {
+    for (var pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1])
+  }
 }
