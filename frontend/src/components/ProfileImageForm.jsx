@@ -1,24 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function FileForm() {
     const [json, setjson] = useState(null)
+    const [formD, setFormD] = useState(new FormData())
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        const form = event.target
-        const formData = new FormData()
-        formData.append('profile_image[title]', form.title.value)
-        formData.append('profile_image[image]', form.image.files[0], form.image.value)
-        submitToApi(formData)
+    useEffect(() => {
+        setFormD(new FormData())
+    },[json])
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        const form = e.target
+        // const formData = new FormData()
+        const formData = formD
+        // formData.append('profile_image[title]', form.title.value)
+        formD.append('profile_image[title]', form.title.value)
+        // formData.append('profile_image[image]', form.image.files[0], form.image.value)
+        formD.append('profile_image[image]', form.image.files[0], form.image.value)
+        setFormD(formData)
+        submitToApi(formD)
     }
 
     function submitToApi(formData) {
-        console.log(formData)
         fetch('http://localhost:3000/api/v1/profile_images', {
             method: "POST",
             body: formData,
         }).then(response => response.json())
-            .then(data => setjson(data))
+            .then(data => {
+                setjson(data)
+            })
             .catch(error => console.error(error));
     }
 
@@ -60,7 +70,7 @@ export default function FileForm() {
                 </form>
             </section>
             <section className="profile-image-preview">
-                { json?.image_url && <img src={json.image_url} alt='profile pic'/>}
+                { json?.image_url && <img src={json.image_url} alt='profile pic' className='avatar'/>}
             </section>
         </>
     )
