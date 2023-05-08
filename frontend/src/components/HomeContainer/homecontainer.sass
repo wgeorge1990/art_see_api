@@ -1,0 +1,85 @@
+@use '../../styles/variables'
+@use '../../styles/mixins'
+@use '../../styles/abstracts/breakpoints'
+    
+.mainDiv
+    margin: -3rem
+    margin-bottom: 3rem
+    width: 100%
+    height: 100vh
+    display: flex
+    flex-direction: column
+    justify-content: center
+    flex-wrap: wrap 
+    text-align: center
+
+    @include breakpoints.sm
+        margin: 0
+        height: 110vh
+
+    h1, span
+        width: 100%
+        background: variables.$gradient
+        -webkit-background-clip: text
+        -webkit-text-fill-color: transparent
+
+        @include breakpoints.sm
+            margin: 2rem 0
+
+    h1
+        font-size: 8rem
+
+        @include breakpoints.sm
+            font-size: 5rem
+            margin: 0 auto
+
+    span
+        font-size: 2rem
+        width: 100%
+
+        @include breakpoints.sm
+            font-size: 1.7rem
+
+    .mainItem
+        width: 60%
+        height: 100%
+        @include mixins.center
+        flex-wrap: wrap
+        flex-direction: column
+
+        @include breakpoints.sm
+            width: 100%
+            height: 40%
+
+    .mainImg
+        width: 40%
+        height: 70%
+        background: url('../assets/willg1.jpg') no-repeat center
+        background-size: 100%
+        filter: opacity(0.9)
+
+        @include breakpoints.sm
+            width: 100%
+            height: 40%
+            background-size: 80%
+
+    .arrow 
+        position: absolute
+        inset: auto 1rem 1rem auto
+        width: 4rem
+        background: variables.$gradient
+        border-radius: 1rem 
+        border: 3px solid transparent
+        transition: all 0.5s ease-in-out
+
+        &:hover
+            border: 3px solid #ffffff
+
+        img
+            width: 100%
+            cursor: pointer
+            transition: all 0.3s ease-in-out
+
+            &:hover
+                transform: scale(1.1)
+                fill: #ffffff
